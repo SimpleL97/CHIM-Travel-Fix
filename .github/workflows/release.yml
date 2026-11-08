@@ -32,8 +32,9 @@ env:
   # and "File ID" - not the numbers in the page address or the download link. Until then a
   # release is only attached on GitHub. Secret NEXUSMODS_API_KEY (environment "Nexus" or the
   # repository's secrets): personal API key from nexusmods.com/settings/api-keys.
-  MOD_ID: ""
-  FILE_ID: ""
+  # The page: nexusmods.com/skyrimspecialedition/mods/198442
+  MOD_ID: "7318624470826"   # "Unique Mod ID" (the changelog goes to /mods/<id>/changelogs)
+  FILE_ID: "8340573"        # "File ID" of the main file "CHIM Travel Fix"; new versions are added to it
   ARCHIVE: "dist/CHIM Travel Fix.zip"
 
 jobs:

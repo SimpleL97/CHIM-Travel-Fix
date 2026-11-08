@@ -7,7 +7,7 @@ A small mod by **SaurOff** for [CHIM](https://www.nexusmods.com/skyrimspecialedi
 wait there") walk to the place they named, in any game language, instead of a random place
 nearby (often a cave).
 
-> **Status: 1.0.0 is in development and not released yet**, on Nexus or as a GitHub release.
+> **Nexus page: [CHIM Travel Fix](https://www.nexusmods.com/skyrimspecialedition/mods/198442)** - download the packaged release there.
 
 It is only a CHIM server plugin: no `.esp`, no scripts, nothing in your save. CHIM's own
 files are not changed.
@@ -56,7 +56,7 @@ place. English games are hit by (1) too; other languages, by both.
 | **CHIM OStim Bridge** | AI agents start, change and end OStim scenes; reactions, talk and cries of passion during scenes; needs | [Nexus](https://www.nexusmods.com/skyrimspecialedition/mods/194761) · [GitHub](https://github.com/SimpleL97/CHIM-OStim-Bridge) |
 | **CHIM ORomance Bridge** | love, partners and marriage (several spouses) through ORomance Plus, married life, children with Fertility Mode | [Nexus](https://www.nexusmods.com/skyrimspecialedition/mods/198436) · [GitHub](https://github.com/SimpleL97/CHIM-ORomance-Bridge) |
 | **CHIM Vampire Bridge** | vampires: blood thirst, the bite, Vampire Lords, thralls who obey | [Nexus](https://www.nexusmods.com/skyrimspecialedition/mods/198441) · [GitHub](https://github.com/SimpleL97/CHIM-Vampire-Bridge) |
-| **CHIM Travel Fix** (this one) | Travel_To goes to the place the agent named, in any game language | [GitHub](https://github.com/SimpleL97/CHIM-Travel-Fix) (Nexus later) |
+| **CHIM Travel Fix** (this one) | Travel_To goes to the place the agent named, in any game language | [Nexus](https://www.nexusmods.com/skyrimspecialedition/mods/198442) · [GitHub](https://github.com/SimpleL97/CHIM-Travel-Fix) |
 
 Each works on its own, and none needs another. This one is not connected to the others; it
 fixes CHIM's own action. Thralls and spouses of the bridges are often sent somewhere, and

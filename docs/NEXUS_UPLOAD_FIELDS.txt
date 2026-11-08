@@ -3,6 +3,7 @@ CHIM Travel Fix - values for the Nexus Mods upload form
 
 MOD PAGE
   Name:            CHIM Travel Fix
+  Page:            https://www.nexusmods.com/skyrimspecialedition/mods/198442
   Author:          SaurOff
   Version:         1.0.0
   Category:        Bug Fixes
