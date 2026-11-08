@@ -27,10 +27,11 @@ permissions:
   contents: read
 
 env:
-  # Nexus Mods: fill in once the mod page exists and its first main file is uploaded by hand
-  # (the mod id is in the page's address, the file id in the file's download link); until
-  # then a release is only attached on GitHub. Secret NEXUSMODS_API_KEY (environment "Nexus"
-  # or the repository's secrets): personal API key from nexusmods.com/settings/api-keys.
+  # Nexus Mods: fill in once the mod page exists and its first main file is uploaded by hand.
+  # Both ids are in that file's "Advanced" dialog on the Files tab, section API: "Unique Mod ID"
+  # and "File ID" - not the numbers in the page address or the download link. Until then a
+  # release is only attached on GitHub. Secret NEXUSMODS_API_KEY (environment "Nexus" or the
+  # repository's secrets): personal API key from nexusmods.com/settings/api-keys.
   MOD_ID: ""
   FILE_ID: ""
   ARCHIVE: "dist/CHIM Travel Fix.zip"

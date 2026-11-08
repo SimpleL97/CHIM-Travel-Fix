@@ -24,8 +24,9 @@ FILE UPLOAD
   Description:     First release. CHIM installs the server plugin on its server at game start.
 
 AFTER THE FIRST UPLOAD
-  Put the mod id (from the page address) and the file id (from the main file's download link)
-  into MOD_ID / FILE_ID in .github/workflows/release.yml: from then on a GitHub release is
+  Open the main file's "Advanced" dialog (Files tab) and take the two ids of its API section:
+  "Unique Mod ID" -> MOD_ID, "File ID" -> FILE_ID in .github/workflows/release.yml (not the
+  numbers in the page address or the download link). From then on a GitHub release is
   uploaded to Nexus as a new version of that file by itself.
 
 PERMISSIONS (suggested)
