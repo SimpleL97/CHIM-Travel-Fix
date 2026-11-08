@@ -1,0 +1,69 @@
+# CHIM Travel Fix - tests and builds the mod on GitHub and attaches it to releases.
+#
+# Every push and pull request: PHP syntax check of the server plugin, the matching tests
+# (tests/test_match.php), and the release archive built by build.py.
+# Publishing a GitHub release from a tag (v1.0.0): the tagged commit is built the same way,
+# its version must match the tag, and the archive is attached to the release.
+
+name: Build and release
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+env:
+  ARCHIVE: "dist/CHIM Travel Fix.zip"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: PHP syntax
+        run: for f in server/chim_travel_fix/*.php tests/*.php; do php -l "$f"; done
+
+      - name: Matching tests
+        run: php tests/test_match.php
+
+      - name: Build
+        run: python3 -I build.py dist
+
+      - name: Version matches the tag
+        if: github.event_name == 'release'
+        run: |
+          FOUND=$(unzip -p "$ARCHIVE" fomod/info.xml | grep -o 'MachineVersion="[^"]*"' | cut -d'"' -f2)
+          TAG="${{ github.event.release.tag_name }}"
+          if [ "$FOUND" != "${TAG#v}" ]; then
+            echo "::error::the mod is version $FOUND, the tag is $TAG"; exit 1
+          fi
+
+      - name: Keep the archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: CHIM Travel Fix
+          path: ${{ env.ARCHIVE }}
+          if-no-files-found: error
+
+  release:
+    needs: build
+    if: github.event_name == 'release'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: CHIM Travel Fix
+          path: dist
+      - name: Attach the archive to the GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload "${{ github.event.release.tag_name }}" "$ARCHIVE" --repo "$GITHUB_REPOSITORY" --clobber

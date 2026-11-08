@@ -1,0 +1,10 @@
+CHIM Travel Fix - changelog
+===========================
+
+1.0.0 (not released yet)
+- First version: Travel_To goes to the place the agent named, in any game language,
+  instead of a random one; "home" / "my house" in a city finds the player house there;
+  an unknown place goes to the game by name instead of a random place.
+- On the player's turn the AI is told to write place names as the game names them, in
+  the game's language, and which player houses CHIM knows.
+- Log file log/chim_travel_fix.log on the CHIM server.

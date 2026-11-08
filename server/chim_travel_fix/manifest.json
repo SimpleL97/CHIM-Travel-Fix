@@ -1,0 +1,6 @@
+{
+  "name": "chim_travel_fix",
+  "description": "CHIM Travel Fix by SaurOff: Travel_To goes to the place the agent named, in any game language, instead of a random one.",
+  "version": "1.0.0",
+  "author": "SaurOff"
+}

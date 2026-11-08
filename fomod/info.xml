@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fomod>
+  <Name>CHIM Travel Fix</Name>
+  <Author>SaurOff</Author>
+  <Version MachineVersion="1.0.0">1.0.0</Version>
+  <Description>CHIM AI agents told to go somewhere (Travel_To) walk to the place they named - in any game language - instead of a random cave. Also tells the AI the game's own names of the places and of the player houses. A CHIM server plugin only: no .esp, no scripts, nothing in your save.</Description>
+  <Groups>
+    <element>Bug Fixes</element>
+    <element>Gameplay</element>
+  </Groups>
+</fomod>
