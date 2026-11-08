@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://qconsulting.ca/fo3/ModConfig5.0.xsd">
   <moduleName>CHIM Travel Fix</moduleName>
+  <moduleImage path="fomod\images\banner.jpg" />
 
   <!-- 00 Core: Data/CHIM/server-plugins/chim_travel_fix/<version>.dwpkg, which CHIM's own
        ServerPluginSync uploads and activates on the CHIM server at game start. -->
@@ -15,6 +16,7 @@
           <plugins order="Explicit">
             <plugin name="Manual server install tools">
               <description>Not needed with a current CHIM: the server plugin is installed automatically when the game starts (CHIM syncs Data/CHIM/server-plugins to its server). Pick this only if that does not happen on your CHIM version. It adds the folder "CHIM Travel Fix Server Tools" with Install-ServerPlugin.bat (copies the plugin into the DwemerAI WSL distro) and Uninstall-ServerPlugin.bat (removes it).</description>
+              <image path="fomod\images\banner.jpg" />
               <files>
                 <folder source="10 Server Tools" destination="" priority="0"/>
               </files>

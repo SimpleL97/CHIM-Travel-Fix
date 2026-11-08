@@ -1,9 +1,13 @@
-# CHIM Travel Fix - tests and builds the mod on GitHub and attaches it to releases.
+# CHIM Travel Fix - tests and builds the mod on GitHub and publishes releases.
 #
 # Every push and pull request: PHP syntax check of the server plugin, the matching tests
-# (tests/test_match.php), and the release archive built by build.py.
-# Publishing a GitHub release from a tag (v1.0.0): the tagged commit is built the same way,
-# its version must match the tag, and the archive is attached to the release.
+# (tests/test_match.php), and the release archive built by build.py, kept as the run's
+# artifact "CHIM Travel Fix".
+# Publishing a GitHub release from a tag (v1.0.0): the tagged commit is built the same
+# way, its version must match the tag, the archive is attached to the release and - once
+# MOD_ID / FILE_ID below are set - uploaded to Nexus Mods as a new version of the main file
+# (the previous one moves to "Old versions", the release text becomes the changelog).
+# Actions -> Run workflow with a tag publishes an existing release again.
 
 name: Build and release
 
@@ -13,19 +17,38 @@ on:
   pull_request:
   release:
     types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Publish an existing release again, e.g. v1.0.0 (empty: only build)"
+        required: false
 
 permissions:
   contents: read
 
 env:
+  # Nexus Mods: fill in once the mod page exists and its first main file is uploaded by hand
+  # (the mod id is in the page's address, the file id in the file's download link); until
+  # then a release is only attached on GitHub. Secret NEXUSMODS_API_KEY (environment "Nexus"
+  # or the repository's secrets): personal API key from nexusmods.com/settings/api-keys.
+  MOD_ID: ""
+  FILE_ID: ""
   ARCHIVE: "dist/CHIM Travel Fix.zip"
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.tag.outputs.tag }}
     steps:
+      - name: Which tag
+        id: tag
+        run: echo "tag=${{ github.event.release.tag_name || github.event.inputs.tag }}" >> "$GITHUB_OUTPUT"
+
       - name: Check out
         uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.tag.outputs.tag || github.ref }}
 
       - name: PHP syntax
         run: for f in server/chim_travel_fix/*.php tests/*.php; do php -l "$f"; done
@@ -37,13 +60,14 @@ jobs:
         run: python3 -I build.py dist
 
       - name: Version matches the tag
-        if: github.event_name == 'release'
+        if: steps.tag.outputs.tag != ''
         run: |
           FOUND=$(unzip -p "$ARCHIVE" fomod/info.xml | grep -o 'MachineVersion="[^"]*"' | cut -d'"' -f2)
-          TAG="${{ github.event.release.tag_name }}"
+          TAG="${{ steps.tag.outputs.tag }}"
           if [ "$FOUND" != "${TAG#v}" ]; then
             echo "::error::the mod is version $FOUND, the tag is $TAG"; exit 1
           fi
+          echo "version $FOUND OK"
 
       - name: Keep the archive
         uses: actions/upload-artifact@v4
@@ -52,18 +76,70 @@ jobs:
           path: ${{ env.ARCHIVE }}
           if-no-files-found: error
 
-  release:
+  publish:
     needs: build
-    if: github.event_name == 'release'
+    if: needs.build.outputs.tag != ''
     runs-on: ubuntu-latest
+    environment: Nexus
     permissions:
-      contents: write
+      contents: write  # attach the archive to the release
     steps:
-      - uses: actions/download-artifact@v4
+      - name: Get the archive
+        uses: actions/download-artifact@v4
         with:
           name: CHIM Travel Fix
           path: dist
+
       - name: Attach the archive to the GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release upload "${{ github.event.release.tag_name }}" "$ARCHIVE" --repo "$GITHUB_REPOSITORY" --clobber
+        run: gh release upload "${{ needs.build.outputs.tag }}" "$ARCHIVE" --repo "$GITHUB_REPOSITORY" --clobber
+
+      - name: Is there a Nexus page yet
+        id: nexus
+        run: |
+          if [ -n "$MOD_ID" ] && [ -n "$FILE_ID" ]; then
+            echo "go=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::MOD_ID and FILE_ID are not set in this workflow yet - not uploaded to Nexus Mods; the GitHub release has the archive"
+          fi
+
+      - name: Release notes as the Nexus changelog
+        id: notes
+        if: steps.nexus.outputs.go == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          BODY=$(gh release view "${{ needs.build.outputs.tag }}" --repo "$GITHUB_REPOSITORY" --json body --jq .body)
+          # plain lines for Nexus: no markdown headings, bold or links
+          CLEAN=$(printf '%s\n' "$BODY" | sed -E 's/^#+ *//; s/\*\*//g; s/\[([^]]*)\]\([^)]*\)/\1/g')
+          {
+            echo "changelog<<CHANGELOG_EOF"
+            printf '%s\n' "$CLEAN"
+            echo "CHANGELOG_EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Version for Nexus
+        id: version
+        if: steps.nexus.outputs.go == 'true'
+        run: |
+          TAG="${{ needs.build.outputs.tag }}"
+          echo "version=${TAG#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Upload to Nexus Mods
+        if: steps.nexus.outputs.go == 'true'
+        uses: Nexus-Mods/upload-action@v1.0.0-beta.11
+        with:
+          api_key: ${{ secrets.NEXUSMODS_API_KEY }}
+          mod_id: ${{ env.MOD_ID }}
+          file_id: ${{ env.FILE_ID }}
+          filename: ${{ env.ARCHIVE }}
+          version: ${{ steps.version.outputs.version }}
+          display_name: CHIM Travel Fix
+          description: "A CHIM server plugin only (no .esp); CHIM installs it on its server at game start. Source and build instructions: https://github.com/SimpleL97/CHIM-Travel-Fix"
+          category: main
+          archive_existing_version: true
+          update_mod_version: true
+          primary_mod_manager_download: true
+          allow_mod_manager_download: true
+          changelog: ${{ steps.notes.outputs.changelog }}

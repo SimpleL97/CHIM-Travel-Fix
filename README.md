@@ -1,3 +1,5 @@
+![CHIM Travel Fix](art/banner.png)
+
 # CHIM Travel Fix
 
 A small mod by **SaurOff** for [CHIM](https://www.nexusmods.com/skyrimspecialedition/mods/126330)
@@ -75,8 +77,9 @@ server/
     prompts.php       the line added to the player's turn
   *.bat, *.ps1        optional manual install / uninstall
 tests/test_match.php  matching and hook tests (php tests/test_match.php)
-fomod/                installer (info.xml, ModuleConfig.xml)
+fomod/                installer (info.xml, ModuleConfig.xml, images/banner.jpg)
 docs/                 player README, CHANGELOG, bug report for CHIM
+art/                  banner generator (make_banner.py, render_banner.ps1) and the banner
 build.py              builds the .dwpkg and the release zip (Python 3.8+, standard library)
 ```
 
