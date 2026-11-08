@@ -54,7 +54,7 @@ place. English games are hit by (1) too; other languages, by both.
 | Mod | What it adds | Get it |
 |---|---|---|
 | **CHIM OStim Bridge** | AI agents start, change and end OStim scenes; reactions, talk and cries of passion during scenes; needs | [Nexus](https://www.nexusmods.com/skyrimspecialedition/mods/194761) · [GitHub](https://github.com/SimpleL97/CHIM-OStim-Bridge) |
-| **CHIM ORomance Bridge** | love, partners and marriage (several spouses) through ORomance Plus, married life, children with Fertility Mode | [GitHub](https://github.com/SimpleL97/CHIM-ORomance-Bridge) (Nexus later) |
+| **CHIM ORomance Bridge** | love, partners and marriage (several spouses) through ORomance Plus, married life, children with Fertility Mode | [Nexus](https://www.nexusmods.com/skyrimspecialedition/mods/198436) · [GitHub](https://github.com/SimpleL97/CHIM-ORomance-Bridge) |
 | **CHIM Vampire Bridge** | vampires: blood thirst, the bite, Vampire Lords, thralls who obey | [GitHub](https://github.com/SimpleL97/CHIM-Vampire-Bridge) (Nexus later) |
 | **CHIM Travel Fix** (this one) | Travel_To goes to the place the agent named, in any game language | [GitHub](https://github.com/SimpleL97/CHIM-Travel-Fix) (Nexus later) |
 

@@ -70,7 +70,7 @@ TOGETHER WITH MY OTHER MODS
 ---------------------------
 Works on its own, and next to my CHIM bridges (each works on its own too):
 - CHIM OStim Bridge (Nexus 194761, github.com/SimpleL97/CHIM-OStim-Bridge)
-- CHIM ORomance Bridge (github.com/SimpleL97/CHIM-ORomance-Bridge)
+- CHIM ORomance Bridge (Nexus 198436, github.com/SimpleL97/CHIM-ORomance-Bridge)
 - CHIM Vampire Bridge (github.com/SimpleL97/CHIM-Vampire-Bridge) - its thralls are
   often sent somewhere ("go to my house and wait there").
 
