@@ -35,6 +35,8 @@ env:
   # The page: nexusmods.com/skyrimspecialedition/mods/198442
   MOD_ID: "7318624470826"   # "Unique Mod ID" (the changelog goes to /mods/<id>/changelogs)
   FILE_ID: "8340573"        # "File ID" of the main file "CHIM Travel Fix"; new versions are added to it
+  # versions already uploaded to Nexus by hand: their GitHub release is not uploaded again
+  NEXUS_UPLOADED_BY_HAND: "1.0.0"
   ARCHIVE: "dist/CHIM Travel Fix.zip"
 
 jobs:
@@ -100,7 +102,10 @@ jobs:
       - name: Is there a Nexus page yet
         id: nexus
         run: |
-          if [ -n "$MOD_ID" ] && [ -n "$FILE_ID" ]; then
+          V="${{ needs.build.outputs.tag }}"; V="${V#v}"
+          if printf ' %s ' $NEXUS_UPLOADED_BY_HAND | grep -q " $V "; then
+            echo "::notice::$V was uploaded to Nexus Mods by hand - not uploaded again; the GitHub release has the archive"
+          elif [ -n "$MOD_ID" ] && [ -n "$FILE_ID" ]; then
             echo "go=true" >> "$GITHUB_OUTPUT"
           else
             echo "::notice::MOD_ID and FILE_ID are not set in this workflow yet - not uploaded to Nexus Mods; the GitHub release has the archive"
