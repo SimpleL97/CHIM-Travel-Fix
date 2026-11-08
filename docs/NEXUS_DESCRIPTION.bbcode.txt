@@ -1,0 +1,62 @@
+[center][size=6][b]CHIM Travel Fix[/b][/size]
+[size=3]"Go to my house in Whiterun" - and they go to your house, not into a random cave.[/size]
+[b]Open source:[/b] [url=https://github.com/SimpleL97/CHIM-Travel-Fix]github.com/SimpleL97/CHIM-Travel-Fix[/url][/center]
+
+[size=4][b]What is this?[/b][/size]
+A small fix for [url=https://www.nexusmods.com/skyrimspecialedition/mods/126330]CHIM[/url]. When you send an AI agent somewhere, they walk to the place they named - in any game language - instead of a random place nearby. It is only a CHIM server plugin: no .esp, no scripts, nothing in your save, and CHIM's own files are not changed.
+
+[size=4][b]The problem[/b][/size]
+When an agent uses [b]Travel_To[/b], CHIM looks the place up in its table of known locations. That lookup is broken in two ways:
+[list]
+[*]The query that compares the names always fails (it sorts by a column the table does not have), so CHIM only compares the name you asked for with the [i]region[/i] names.
+[*]CHIM's database compares text with a setting under which letters outside plain English - Cyrillic, Polish, Czech, German umlauts, Chinese, Japanese - never match anything.
+[/list]
+With every score at zero, the first location in the table wins. The agent says "I'll wait for you at home" and walks into a cave. English games are hit by the first problem, other languages by both.
+
+[size=4][b]What it does[/b][/size]
+[list]
+[*]Finds the place the agent named itself, in any language: the exact name first; "home" or "my house" with a city - the player house in that city (Breezehome for "my house in Whiterun"); a name that contains what was asked ("Riften" - its market square, not its warehouse); then the closest spelling.
+[*]Hands CHIM that exact place, which CHIM passes to the game as it is.
+[*]When no known place is close enough, the agent's own words go to the game, which looks the place up by itself - never a random place.
+[*]On your turn the AI is told to write place names the way the game names them, in the game's language, and which player houses CHIM knows - so "go home" works.
+[*]Logs every lookup to log/chim_travel_fix.log on the CHIM server.
+[/list]
+When CHIM fixes this itself, the mod can simply be removed.
+
+[size=4][b]Good to know[/b][/size]
+[list]
+[*]CHIM learns locations as you travel: a house you have never been to is not in its table yet.
+[*]The player houses named to the AI are the game's player houses CHIM knows, owned or not.
+[/list]
+
+[size=4][b]My other CHIM mods[/b][/size]
+Each works on its own. This one is not connected to the others - it fixes CHIM's own action - but their thralls and spouses are often sent somewhere, and with it they arrive.
+[list]
+[*][b]CHIM OStim Bridge[/b] - [url=https://www.nexusmods.com/skyrimspecialedition/mods/194761]Nexus[/url] · [url=https://github.com/SimpleL97/CHIM-OStim-Bridge]GitHub[/url]. AI agents start, change and end OStim scenes; reactions, talk and cries of passion during scenes; needs.
+[*][b]CHIM ORomance Bridge[/b] - [url=https://github.com/SimpleL97/CHIM-ORomance-Bridge]GitHub[/url]. Love, marriage (several spouses) and children through ORomance Plus.
+[*][b]CHIM Vampire Bridge[/b] - [url=https://github.com/SimpleL97/CHIM-Vampire-Bridge]GitHub[/url]. Vampires, the bite, Vampire Lords and thralls who obey.
+[/list]
+
+[size=4][b]Requirements[/b][/size]
+[list]
+[*][url=https://www.nexusmods.com/skyrimspecialedition/mods/126330]CHIM[/url] - game plugin and server (tested with 3.4.2)
+[/list]
+Nothing else.
+
+[size=4][b]Installation[/b][/size]
+[list=1]
+[*]Install with Vortex or Mod Organizer 2. It only adds [i]Data/CHIM/server-plugins/chim_travel_fix/<version>.dwpkg[/i].
+[*]Start the CHIM server, then the game: CHIM installs the bundled server plugin on its server by itself.
+[/list]
+If your CHIM version does not install bundled server plugins, choose "Manual server install tools" in the installer and run [i]Install-ServerPlugin.bat[/i] once.
+[b]Uninstalling:[/b] run [i]Uninstall-ServerPlugin.bat[/i] (manual tools option), then remove the mod.
+
+[size=4][b]For CHIM's developers[/b][/size]
+The bug, with the commands that show it and suggested fixes, is written up here: [url=https://github.com/SimpleL97/CHIM-Travel-Fix/blob/main/docs/CHIM_BUG_REPORT.md]CHIM_BUG_REPORT.md[/url].
+
+[size=4][b]Source code[/b][/size]
+Open source (MIT license): [url=https://github.com/SimpleL97/CHIM-Travel-Fix]github.com/SimpleL97/CHIM-Travel-Fix[/url] - with tests of the matching for Russian, English and German games.
+Bug reports and suggestions are welcome here in the Posts tab or as GitHub issues.
+
+[size=4][b]Credits[/b][/size]
+Dwemer Dynamics for CHIM.

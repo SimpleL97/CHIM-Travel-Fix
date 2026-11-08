@@ -1,0 +1,38 @@
+CHIM Travel Fix - values for the Nexus Mods upload form
+========================================================
+
+MOD PAGE
+  Name:            CHIM Travel Fix
+  Author:          SaurOff
+  Version:         1.0.0
+  Category:        Bug Fixes
+  Adult content:   no
+  Language:        English
+  Brief overview (max 350 characters):
+    CHIM AI agents sent somewhere with Travel_To walk to the place they named - in any game language - instead of a random cave. Works around CHIM's broken location lookup; "my house in Whiterun" finds Breezehome. A CHIM server plugin only: no .esp, no scripts, nothing in your save.
+  Description:     paste NEXUS_DESCRIPTION.bbcode.txt (BBCode editor)
+  Main image:      art/banner.png (1920x1080)
+
+REQUIREMENTS (Nexus "Requirements" tab, Nexus mods)
+  CHIM                              126330   game plugin and server
+
+FILE UPLOAD
+  File:            CHIM Travel Fix.zip   (older versions: archive/CHIM Travel Fix-<version>.zip)
+  File name:       CHIM Travel Fix
+  Version:         1.0.0   (must match fomod/info.xml)
+  Category:        Main Files
+  Description:     First release. CHIM installs the server plugin on its server at game start.
+
+AFTER THE FIRST UPLOAD
+  Put the mod id (from the page address) and the file id (from the main file's download link)
+  into MOD_ID / FILE_ID in .github/workflows/release.yml: from then on a GitHub release is
+  uploaded to Nexus as a new version of that file by itself.
+
+PERMISSIONS (suggested)
+  Upload to other sites:   ask first
+  Modify and re-release:   yes, with credit (it is a fix; others may build on it)
+  Use assets in your mods: credit SaurOff
+  Convert to other games:  no
+  Donation points:         your choice
+
+TAGS (suggested): AI, CHIM, Bug Fix, Followers, Travel, Localization
